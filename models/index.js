@@ -5,29 +5,30 @@ const Tag = require('./Tag');
 const ProductTag = require('./ProductTag');
 
 // Products belongsTo Category
-Product.belongsTo(Driver, {
+Product.belongsTo(Category, {
   foreignKey: 'driver_id',
 });
 // Categories have many Products
-Reader.hasMany(Book, {
+Category.hasMany(Product, {
   foreignKey: 'reader_id',
   onDelete: 'CASCADE',
 });
 // Products belongToMany Tags (through ProductTag)
-Traveller.belongsToMany(Location, {
+Product.belongsToMany(Tag, {
   // Define the third table needed to store the foreign keys
   through: {
-    model: Trip,
-    unique: false
+    model: ProductTag,
+    unique: false,
+    foreignKey: 'product_id'
   }
   
   
 });
 // Tags belongToMany Products (through ProductTag)
-Traveller.belongsToMany(Location, {
+Tag.belongsToMany(Product, {
   // Define the third table needed to store the foreign keys
   through: {
-    model: Trip,
+    model: ProductTag,
     unique: false,
     foreignKey: 'tag_id'
   }
